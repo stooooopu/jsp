@@ -44,6 +44,13 @@
         <artifactId>spring-boot-devtools</artifactId>
         <optional>true</optional>
     	</dependency>
+
+    	<!-- session -->
+		<dependency>
+		    <groupId>org.springframework.session</groupId>
+		    <artifactId>spring-session-core</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>

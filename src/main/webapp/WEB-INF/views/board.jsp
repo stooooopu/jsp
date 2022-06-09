@@ -26,11 +26,15 @@ tr:nth-child(even) {
 </style>
 </head>
 <body>
-
 	<!-- 모르겠으면 일단 출력 해 보기
-		<h1>${data.list[0]}</h1> -->
+		<h3>${data }</h3>
+		<h3>${data.list }</h3> -->
 	<!-- 문제. 테이블에 데이터 넣기  -->
-	<table>
+	<button type="button" onclick="doLogout()">logout</button>
+	<h1>${userId} 님 환영해용</h1>
+	<input id="userNo" type="hidden" value="${userNo}" />
+	<h3>${data.size}</h3>
+	<table> 
 		<thead>
 			<tr>
 			    <th>Company</th>
@@ -40,15 +44,30 @@ tr:nth-child(even) {
 		</thead>
 		
 	 	<tbody>
-	 		<c:forEach items="${data.list}" var="item">
-		 		<tr>
-				    <td>${item.Company}</td>
-				    <td>${item.Contact}</td>
-				    <td>${item.Country}</td>
-  				</tr>
+	 		<c:choose>
+	 			<c:when test="${fn:length(data.list) > 0 }">
+	 				<c:forEach items="${data.list}" var="item">
+				 		<tr>
+						    <td>${item.Company}</td>
+						    <td>${item.Contact}</td>
+						    <td>${item.Country}</td>
+		  				</tr>
+					</c:forEach>
+	 			</c:when>
+	 			<c:otherwise>
+	 				<tr>
+					    <td colspan="3">데이터가 없습니다</td>
+	  				</tr>
+	 			</c:otherwise>
+	 		</c:choose>
 		 	
-			</c:forEach>
 	 	</tbody>
 	</table>
 </body>
+<script type="text/javascript">
+	function doLogout(){
+		location.href = "logout";
+	}
+</script>
+
 </html>

@@ -5,9 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.jsp.VO.ActorVO;
 
@@ -63,7 +68,7 @@ public class HomeController {
 	}
 	
 	@GetMapping("/board")
-	public String loadBoardPage(ModelMap map) {
+	public String loadBoardPage(ModelMap map, HttpSession httpSession) {
 		
 		Map<String, Object> data = new HashMap<String, Object>();
 		
@@ -91,7 +96,54 @@ public class HomeController {
 		data.put("list", list);
 		map.addAttribute("data", data);
 		
+		// 밑에 login에서 저장한 session data 가져오기
+		String userId = (String)httpSession.getAttribute("userId"); // 내가 지정한 key이름
+		
+		// redirect : 다시 내가 지정한 곳으로 가라
+		if(userId == null) {
+			return "redirect:/login";
+		}
+		
+		map.addAttribute("userNo", 10);
+		map.addAttribute("userId", userId);
+		
+		System.out.println("session에서 가져온 Id데이터==> "+userId);
+		
+		
+		
 		return "board";
 	}
 	
+	@GetMapping("/")
+	public String loadMainPage() {
+		return "home";
+	}
+	
+	@GetMapping("/login")
+	public String loadLoginPage() {
+		return "login";
+	}
+	
+	@PostMapping("/login")
+	public @ResponseBody boolean callLogin(@RequestBody Map<String,Object> data, HttpSession httpSession) {
+		String userId = (String) data.get("userId");
+		String userPassword = (String) data.get("userPassword");
+		
+		System.out.println(userId);
+		System.out.println(userPassword);
+		
+		// session에 데이터 set
+		httpSession.setAttribute("userId", userId);
+		// 원래 password는 session에 넣지 않음
+		httpSession.setAttribute("userPassword", userPassword);
+		return true;
+	}
+	
+	@GetMapping("/logout")
+	public String goLoginPage(HttpSession httpSession) {
+		httpSession.removeAttribute("userId");
+		httpSession.removeAttribute("userPassword");
+		
+		return "login";
+	}
 }
