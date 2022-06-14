@@ -48,5 +48,14 @@
 	</c:forEach>
 	
 	<h1>${mapList[0].no}</h1>
+	
+	<!-- for문으로 돌리기 
+		1~5까지 돌리기 
+		(int i=0; i<5 i++) print(i) -->
+	<c:forEach begin="1" end="5" var = "i">
+		<h4>${i}</h4>
+	
+	</c:forEach>
+	
 </body>
 </html>
