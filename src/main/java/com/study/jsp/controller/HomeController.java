@@ -25,7 +25,7 @@ public class HomeController {
 		// HashMap의 map (key , val)
 		map.addAttribute("name", "지유");
 		map.addAttribute("phoneNum",1234);
-		map.addAttribute("size", 85);
+		map.addAttribute("size", 85);   
 		
 		List<String> list = new ArrayList<String>();
 		list.add("도");
